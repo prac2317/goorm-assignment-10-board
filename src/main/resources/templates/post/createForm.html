@@ -2,25 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>게시글 등록</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<div>게시글 등록</div>
-<form th:action th:object="${post}" method="post">
-    <div>
-        <label>제목</label>
-        <input type="text" th:field="*{title}">
-    </div>
-    <div>
-        <label>작성자</label>
-        <input type="text" th:field="*{writer}">
-    </div>
-    <div>
-        <label>내용</label>
-        <input type="text" th:field="*{content}">
-    </div>
-    <button type="buttom" th:onclick="|location.href='@{..}'|">등록</button>
-</form>
+<div class="container">
+    <header>
+        <h1>게시글 등록</h1>
+    </header>
 
+    <form th:action="@{/post/create}" th:object="${postSaveDto}" method="post">
+        <div>
+            <label>제목</label>
+            <input type="text" th:field="*{title}" placeholder="제목을 입력하세요">
+        </div>
+        <div>
+            <label>내용</label>
+            <textarea th:field="*{content}" placeholder="내용을 입력하세요"></textarea>
+        </div>
+        <button type="submit">등록</button>
+    </form>
+
+    <footer>
+        <a th:href="@{/post}">목록으로 돌아가기</a>
+    </footer>
+</div>
 </body>
 </html>

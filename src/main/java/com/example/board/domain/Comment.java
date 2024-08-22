@@ -1,5 +1,7 @@
 package com.example.board.domain;
 
+import com.example.board.domain.post.Post;
+
 public class Comment {
 
     private Long id;

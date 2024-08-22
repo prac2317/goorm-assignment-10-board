@@ -2,24 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>게시글 상세</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<ul>
-    <li>게시글 조회
-        <ul>
-            <li>제목</li>
-            <li th:text="${post.title}">제목</li>
-            <li>작성자</li>
-            <li th:text="${post.writer}">작성자</li>
-            <li>내용</li>
-            <li th:text="${post.content}">내용</li>
-        </ul>
-    </li>
-    <button><a th:href="@{|/post/${postId}/update|}">수정</a></button>
-    <form th:action="@{|/post/${postId}/delete|}" method="post">
-        <button type="submit">삭제</button>
-    </form>
-</ul>
+<div class="container">
+    <header>
+        <h1>게시글 상세</h1>
+    </header>
+
+    <ul>
+        <li><strong>제목:</strong> <span th:text="${postReadDto.title}">제목</span></li>
+        <li><strong>내용:</strong> <span th:text="${postReadDto.content}">내용</span></li>
+    </ul>
+
+    <footer>
+        <button><a th:href="@{|/post/${postId}/update|}">수정</a></button>
+        <form th:action="@{|/post/${postId}/delete|}" method="post" style="display:inline;">
+            <button type="submit">삭제</button>
+        </form>
+        <a th:href="@{/post}">목록으로 돌아가기</a>
+    </footer>
+</div>
 </body>
 </html>

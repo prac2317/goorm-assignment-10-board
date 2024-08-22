@@ -6,14 +6,10 @@
 </head>
 <body>
 <div>게시글 등록</div>
-<form th:action th:object="${post}" method="post">
+<form th:action th:object="${postUpdateDto}" method="post">
     <div>
         <label>제목</label>
         <input type="text" th:field="*{title}" th:value="*{title}">
-    </div>
-    <div>
-        <label>작성자</label>
-        <input type="text" th:field="*{writer}" th:value="*{writer}">
     </div>
     <div>
         <label>내용</label>
