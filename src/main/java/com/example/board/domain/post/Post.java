@@ -1,6 +1,6 @@
 package com.example.board.domain.post;
 
-import com.example.board.domain.Comment;
+import com.example.board.domain.comment.Comment;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -25,7 +25,8 @@ public class Post {
 
     private boolean isDeleted = false;
 
-//    private List<Comment> comments;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    private List<Comment> comments;
 
     public Post() {
         this.createdDate = LocalDateTime.now();

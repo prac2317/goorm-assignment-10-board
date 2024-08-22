@@ -16,6 +16,23 @@
         <li><strong>내용:</strong> <span th:text="${postReadDto.content}">내용</span></li>
     </ul>
 
+    <ul>
+        <div th:each="comment:${comments}">
+                <span th:text="${comment.content}">댓글 내용</span>
+            <form th:action="@{|/post/${postId}/comment/${comment.id}/update|}" th:object=${commentDto} method="post">
+                <input type="text" th:field="*{content}">
+                <button type="submit">수정</button>
+            </form>
+            <form th:action="@{|/post/${postId}/comment/${comment.id}/delete|}" method="post">
+                <button type="submit">삭제</button>
+            </form>
+        </div>
+        <form th:action="@{/post/{postId}/comment/create(postId=${postId})}" th:object=${commentDto} method="post">
+            <input type="text" th:field="*{content}">
+            <button type="submit">등록</button>
+        </form>
+    </ul>
+
     <footer>
         <button><a th:href="@{|/post/${postId}/update|}">수정</a></button>
         <form th:action="@{|/post/${postId}/delete|}" method="post" style="display:inline;">
