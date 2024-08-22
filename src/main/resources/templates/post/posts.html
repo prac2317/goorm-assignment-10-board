@@ -12,7 +12,7 @@
     </header>
 
     <ul>
-        <li th:each="post:${posts}">
+        <li th:each="post:${paging}">
             <span th:text="${post.id}">id</span> -
             <span th:text="${post.title}">제목</span>
             <a th:href="@{/post/{postId}(postId=${post.id})}">보기</a>
@@ -20,7 +20,15 @@
     </ul>
 
     <footer>
-        <button><a th:href="@{/post/create}">글쓰기</a></button>
+        <div>
+            <a th:if="${paging.hasPrevious()}" th:href="@{|?page=${paging.number-1}|}">이전</a>
+            <span th:unless="${paging.hasPrevious()}">이전</span>
+            <a th:if="${paging.hasNext()}" th:href="@{|?page=${paging.number+1}|}">다음</a>
+            <span th:unless="${paging.hasNext()}">다음</span>
+        </div>
+        <div>
+            <a th:href="@{/post/create}">글쓰기</a>
+        </div>
     </footer>
 </div>
 </body>

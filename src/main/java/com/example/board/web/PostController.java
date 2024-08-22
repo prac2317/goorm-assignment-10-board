@@ -11,6 +11,10 @@ import com.example.board.web.dto.PostUpdateDto;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +34,13 @@ public class PostController {
     private final CommentRepository commentRepository;
 
     @GetMapping
-    public String posts(Model model) {
-        List<Post> posts = postRepository.findAll();
-        model.addAttribute("posts", posts);
+    public String posts(@RequestParam(value="page", defaultValue = "0") int page, Model model) {
+        Pageable pageable = PageRequest.of(page,10, Sort.by(Sort.Direction.DESC, "createdDate"));
+        Page<Post> paging = postRepository.findAll(pageable);
+        model.addAttribute("paging", paging);
+
+//        List<Post> posts = postRepository.findAll();
+//        model.addAttribute("posts", posts);
         return "post/posts";
     }
 
@@ -108,7 +116,6 @@ public class PostController {
      * 댓글 dto 받기
      * 게시글 id 받아오기
      * 댓글 저장소에 save
-     * 게시글 리다이렉트(모델에 게시글 넣기?)
      */
     @PostMapping("/{postId}/comment/create")
     public String createComment(@PathVariable("postId") Long id, @ModelAttribute CommentDto commentDto, RedirectAttributes redirectAttributes) {
@@ -125,7 +132,6 @@ public class PostController {
     /**
      * 댓글 id 받아오기
      * 댓글 저장소에서 삭제
-     * 게시글 리다이렉트(모델에 게시글 넣기?)
      */
     @PostMapping("/{postId}/comment/{commentId}/delete")
     public String deleteComment(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId) {
@@ -137,7 +143,6 @@ public class PostController {
     /**
      * 댓글 id 받아오기
      * 댓글 저장소에서 수정
-     * 게시글 리다이렉트(모델에 게시글 넣기?)
      */
     @PostMapping("/{postId}/comment/{commentId}/update")
     public String updateComment(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId, @ModelAttribute CommentDto commentDto) {
@@ -159,6 +164,12 @@ public class PostController {
         Post post1 = postRepository.save(new Post("post1", "hello world"));
         Post post2 = postRepository.save(new Post("post2", "hi world"));
         Post post3 = postRepository.save(new Post("post3", "bye world"));
+
+        for (int i = 0; i < 100; i++) {
+            String title = "게시글" + Integer.toString(i);
+            postRepository.save(new Post(title, "내용"));
+        }
+
 
         commentRepository.deleteAll();
         commentRepository.save(new Comment("동의합니다", post1));
