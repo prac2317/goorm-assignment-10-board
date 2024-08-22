@@ -18,26 +18,32 @@
 
     <ul>
         <div th:each="comment:${comments}">
+            <li>
                 <span th:text="${comment.content}">댓글 내용</span>
-            <form th:action="@{|/post/${postId}/comment/${comment.id}/update|}" th:object=${commentDto} method="post">
-                <input type="text" th:field="*{content}">
-                <button type="submit">수정</button>
-            </form>
-            <form th:action="@{|/post/${postId}/comment/${comment.id}/delete|}" method="post">
-                <button type="submit">삭제</button>
-            </form>
+                <form th:action="@{|/post/${postId}/comment/${comment.id}/update|}" th:object="${commentDto}" method="post" style="display:inline;">
+                    <input type="text" th:field="*{content}" placeholder="댓글 수정">
+                    <button type="submit">수정</button>
+                </form>
+                <form th:action="@{|/post/${postId}/comment/${comment.id}/delete|}" method="post" style="display:inline;">
+                    <button type="submit">삭제</button>
+                </form>
+            </li>
         </div>
-        <form th:action="@{/post/{postId}/comment/create(postId=${postId})}" th:object=${commentDto} method="post">
-            <input type="text" th:field="*{content}">
+        <form th:action="@{/post/{postId}/comment/create(postId=${postId})}" th:object="${commentDto}" method="post">
+            <input type="text" th:field="*{content}" placeholder="댓글 입력">
             <button type="submit">등록</button>
         </form>
     </ul>
 
     <footer>
-        <button><a th:href="@{|/post/${postId}/update|}">수정</a></button>
-        <form th:action="@{|/post/${postId}/delete|}" method="post" style="display:inline;">
-            <button type="submit">삭제</button>
-        </form>
+        <div>
+            <form th:action="@{|/post/${postId}/update|}" method="get" style="display:inline;">
+                <button type="submit">수정</button>
+            </form>
+            <form th:action="@{|/post/${postId}/delete|}" method="post" style="display:inline;">
+                <button type="submit">삭제</button>
+            </form>
+        </div>
         <a th:href="@{/post}">목록으로 돌아가기</a>
     </footer>
 </div>

@@ -2,21 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>게시글 수정</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<div>게시글 등록</div>
-<form th:action th:object="${postUpdateDto}" method="post">
-    <div>
-        <label>제목</label>
-        <input type="text" th:field="*{title}" th:value="*{title}">
-    </div>
-    <div>
-        <label>내용</label>
-        <input type="text" th:field="*{content}" th:value="*{content}">
-    </div>
-    <button type="buttom" th:onclick="|location.href='@{..}'|">수정</button>
-</form>
+<div class="container">
+    <header>
+        <h1>게시글 수정</h1>
+    </header>
 
+    <form th:action th:object="${postUpdateDto}" method="post">
+        <div>
+            <label>제목</label>
+            <input type="text" th:field="*{title}" th:value="*{title}" placeholder="제목을 입력하세요">
+        </div>
+        <div>
+            <label>내용</label>
+            <textarea th:field="*{content}" placeholder="내용을 입력하세요"></textarea>
+        </div>
+        <button type="submit">수정</button>
+    </form>
+
+    <footer>
+        <a th:href="@{/post}">목록으로 돌아가기</a>
+    </footer>
+</div>
 </body>
 </html>
